@@ -1,4 +1,4 @@
-name: MLflow DockerHub Publish
+name: CI DockerHub
 
 on:
   push:
