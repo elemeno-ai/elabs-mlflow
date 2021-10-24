@@ -1,0 +1,28 @@
+name: MLflow DockerHub Publish
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set env
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+
+      - name: docker login
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build docker
+        run: make VERSION="$RELEASE_VERSION" docker/build
+
+      - name: Push docker to Dockerhub
+        run: make VERSION="$RELEASE_VERSION" docker/push
