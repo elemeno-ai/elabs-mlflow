@@ -19,7 +19,7 @@ jobs:
           docker login -u DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: Build docker
-        run: make VERSION="$RELEASE_VERSION" docker/build
+        run: make VERSION="${GITHUB_REF##*/}" docker/build
 
       - name: Push docker to Dockerhub
         run: make VERSION="${GITHUB_REF##*/}" docker/push
