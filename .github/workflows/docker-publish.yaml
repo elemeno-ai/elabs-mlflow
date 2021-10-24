@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set env
-        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
-
       - name: docker login
         env:
           DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
@@ -25,4 +22,4 @@ jobs:
         run: make VERSION="$RELEASE_VERSION" docker/build
 
       - name: Push docker to Dockerhub
-        run: make VERSION="$RELEASE_VERSION" docker/push
+        run: make VERSION="${GITHUB_REF##*/}" docker/push
