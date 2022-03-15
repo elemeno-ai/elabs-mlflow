@@ -4,6 +4,7 @@ set -e
 
 echo
 
+# shellcheck disable=SC2015
 [ -z "$BACKEND_STORE_URI" ]      &&  echo "BACKEND_STORE_URI env var must be set."      && exit 1  || :
 [ -z "$DEFAULT_ARTIFACT_ROOT" ]  &&  echo "DEFAULT_ARTIFACT_ROOT env var must be set."  && exit 1  || :
 [ -z "$MLFLOW_S3_ENDPOINT_URL" ] &&  echo "MLFLOW_S3_ENDPOINT_URL env var must be set." && exit 1  || :
